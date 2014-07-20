@@ -32,9 +32,12 @@
       var reporter = userService.getCurrentUser(); // TODO: mocking for now
 
       // TODO: pull from firebase
+      // TODO: these are actual measurements (with approx time) add this data to firebase
       var noiseData = [
-        { reporter: reporter, db_level: '45', lat: '47.605705', lng: '-122.320343', datetime: '2014-07-20 13:22:15 -0700' },
-        { reporter: reporter, db_level: '53', lat: '47.635705', lng: '-122.310343', datetime: '2014-07-20 13:22:15 -0700' }
+        { reporter: reporter, lat: '47.618780', lng: '-122.314280', db_level: '43.5', datetime: '2014-07-20 13:54:15 -0700' },
+        { reporter: reporter, lat: '47.618770', lng: '-122.315600', db_level: '61.5', datetime: '2014-07-20 13:55:15 -0700' },
+        { reporter: reporter, lat: '47.618750', lng: '-122.316900', db_level: '64.5', datetime: '2014-07-20 13:56:15 -0700' },
+        { reporter: reporter, lat: '47.618740', lng: '-122.318210', db_level: '63.5', datetime: '2014-07-20 13:57:15 -0700' }
       ];
 
       deferred.resolve(noiseData);
