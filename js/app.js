@@ -13,33 +13,61 @@
       });
   });
 
-  app.controller('homeController', function($scope) { 
-    var currentUser = { name: 'Andrew Sullivan' }; // TODO: add users/auth
+  app.factory('userService', function($q) {
+    // TODO: add users/auth
 
-    $scope.point = { // TODO: create better add point UX
-      lat: 47.603569,
-      lng: -122.329453,
-      db_level: 60,
-      datetime: '2014-07-20 13:22:15 -0700'
+    var getCurrentUser = function() {
+      return { name: 'Andrew Sullivan', email: 'licyeus@gmail.com' }
     };
 
-    $scope.data = [ // TODO: hook this up to firebase api
-      { reporter: currentUser, db_level: '45', lat: '47.605705', lng: '-122.320343', datetime: '2014-07-20 13:22:15 -0700' },
-      { reporter: currentUser, db_level: '53', lat: '47.635705', lng: '-122.310343', datetime: '2014-07-20 13:22:15 -0700' }
-    ];
+    return {
+      getCurrentUser: getCurrentUser
+    };
+  });
+
+  app.factory('noiseDataService', function($q, userService) {
+    var getNoiseData = function() {
+      var deferred = $q.defer();
+
+      var reporter = userService.getCurrentUser(); // TODO: mocking for now
+
+      // TODO: pull from firebase
+      var noiseData = [
+        { reporter: reporter, db_level: '45', lat: '47.605705', lng: '-122.320343', datetime: '2014-07-20 13:22:15 -0700' },
+        { reporter: reporter, db_level: '53', lat: '47.635705', lng: '-122.310343', datetime: '2014-07-20 13:22:15 -0700' }
+      ];
+
+      deferred.resolve(noiseData);
+
+      return deferred.promise;
+    };
+
+    var addData = function(point) {
+      // TODO: add to firebase
+    };
+
+    return {
+      getNoiseData: getNoiseData,
+      addData: addData
+    };
+  });
+
+  app.controller('homeController', function($scope, noiseDataService, userService) { 
+    // TODO: remove me, only in place to ease development
+    $scope.point = { lat: 47.603569, lng: -122.329453, db_level: 60, datetime: '2014-07-20 13:22:15 -0700' };
+
+    noiseDataService.getNoiseData().then(function(data) { $scope.data = data; });
 
     $scope.addDataPoint = function() {
-      if(true || $scope.pointForm.$valid) {
-        $scope.data.push({
-          reporter: currentUser,
-          lat: $scope.point.lat,
-          lng: $scope.point.lng,
-          db_level: $scope.point.db_level,
-          datetime: $scope.point.datetime
-        });
+      if(true || $scope.pointForm.$valid) { // TODO: validations
+        var dataPoint = $scope.point;
+        dataPoint.reporter = userService.getCurrentUser();
+        $scope.data.push(dataPoint);
+        noiseDataService.addData($scope.point);
 
         $scope.point = {};
       }
     };
+
   });
 }).call(this);
