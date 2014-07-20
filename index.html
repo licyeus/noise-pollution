@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>noise pollution map</title>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css" rel="stylesheet" />
 </head>
 <body ng-app="noisePollution">
   <div class="container">
+    <h1>Noise Pollution</h1>
+
     <ui-view></ui-view>
+
+    <hr>
+
+    <footer>
+      <p>a project of <a href="http://github.com/licyeus">andrew sullivan</a></p>
+    </footer>
   </div>
 
+
+  <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js"></script>
   <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="/bower_components/angular/angular.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/js/lib/angular-mapbox.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

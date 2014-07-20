@@ -1,2 +1,46 @@
-<h1>noise pollution</h1>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="well">
+      <h4>add data point</h4>
+      <form ng-submit="addDataPoint()" role="form">
+        <div class="row">
+          <div class="col-xs-3 form-group">
+            <label for="lat">Latitude</label>
+            <input class="form-control" type="number" step="any" name="lat" ng-model="point.lat">
+          </div>
+          <div class="col-xs-3 form-group">
+            <label for="lng">Longitude</label>
+            <input class="form-control" type="number" step="any" name="lng" ng-model="point.lng">
+          </div>
+          <div class="col-xs-3 form-group">
+            <label for="db_level">Decibel Level</label>
+            <input class="form-control" type="number" step="any" min="0" max="150" name="db_level" ng-model="point.db_level">
+          </div>
+          <div class="col-xs-3 form-group">
+            <label for="Datetime">Datetime</label>
+            <input class="form-control" type="datetime" name="datetime" ng-model="point.datetime">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-offset-9 col-xs-3">
+            <input type="submit" class="btn btn-success" value="Save Data">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-xs-12">
+    <mapbox map-id="licyeus.j10o6g8f" lat="47.623569" lng="-122.329453" width="100%">
+      <marker ng-repeat="datum in data" lat="{{datum.lat}}" lng="{{datum.lng}}">
+        <h1>{{datum.db_level}} decibels</h1>
+        <p>{{datum.datetime}}</p>
+      </marker>
+    </mapbox>
+  </div>
+</div>
 
