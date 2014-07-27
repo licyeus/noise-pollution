@@ -2,16 +2,16 @@ var gulp       = require('gulp'),
     livereload = require('gulp-livereload')
     connect = require('gulp-connect');
 
-gulp.task('connect', function() {
+gulp.task('server', function() {
   connect.server();
 });
 
-gulp.task('watch', [], function() {
+gulp.task('watch', ['server'], function() {
   var server = livereload();
   gulp.watch(['js/**', 'css/**', 'partials/**', 'index.html']).on('change', function(file) {
     server.changed(file.path);
   });
 });
 
-gulp.task('dev', ['connect', 'watch']);
+gulp.task('dev', ['watch']);
 

@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>noise pollution map</title>
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css" rel="stylesheet" />
+  <link href="/css/app.css" rel="stylesheet">
 </head>
 <body ng-app="noisePollution">
-  <div class="container">
-    <h1>Noise Pollution</h1>
 
-    <ui-view></ui-view>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">noise pollution maps</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a ui-sref="#">add data</a></li>
+      <li><a ui-sref="#">change city</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a ui-sref="#">about</a></li>
+      <li><a ui-sref="#">profile</a></li>
+      <li><a ui-sref="#">logout</a></li>
+    </ul>
+  </nav>
 
-    <hr>
-
-    <footer>
-      <p>a project of <a href="http://github.com/licyeus">andrew sullivan</a></p>
-    </footer>
-  </div>
-
+  <ui-view></ui-view>
 
   <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js"></script>
   <script src="/bower_components/jquery/dist/jquery.js"></script>

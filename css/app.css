@@ -1,0 +1,26 @@
+html, body {
+  height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.navbar-brand, .navbar-brand:hover {
+  background: #39cccc !important;
+  color: #fff !important;
+}
+
+.navbar-right {
+  padding-right: 15px;
+}
+
+.map-container {
+  height: 100%;
+  padding-top: 50px;
+}
+
+.angular-mapbox-map {
+  width: 100%;
+  height: 100%;
+}
