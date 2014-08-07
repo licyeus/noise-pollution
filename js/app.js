@@ -1,16 +1,38 @@
 (function() {
   'use strict';
 
-  var app = angular.module('noisePollution', ['ui.router', 'angularMapbox']);
+  var app = angular.module('noisePollution', ['ui.router', 'ui.bootstrap', 'angularMapbox']);
 
   app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
+
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'partials/home.html',
-        controller: 'homeController'
-      });
+        controller: 'HomeController'
+      })
+      .state('add-data', {
+        url: '/add-data',
+        onEnter: function($state, $modal) {
+          var modalInstance = $modal.open({
+            templateUrl: 'partials/add-data.html',
+            controller: 'AddDataController'
+          });
+
+          modalInstance.result.then(
+            function Closed(result) {
+              $state.go('home');
+            },
+            function Dismissed(result) {
+              $state.go('home');
+            }
+          );
+        },
+        onExit: function($state, $rootScope) {
+          $rootScope.$broadcast('DismissAddDataModal');
+        }
+      })
+      ;
   });
 
   app.factory('userService', function($q) {
@@ -55,11 +77,13 @@
     };
   });
 
-  app.controller('homeController', function($scope, noiseDataService, userService) { 
+  app.controller('HomeController', function($scope, noiseDataService, userService) { 
+    noiseDataService.getNoiseData().then(function(data) { $scope.data = data; });
+  });
+
+  app.controller('AddDataController', function($scope, $modalInstance, noiseDataService, userService) {
     // TODO: remove me, only in place to ease development
     $scope.point = { lat: 47.603569, lng: -122.329453, db_level: 60, datetime: '2014-07-20 13:22:15 -0700' };
-
-    noiseDataService.getNoiseData().then(function(data) { $scope.data = data; });
 
     $scope.addDataPoint = function() {
       if(true || $scope.pointForm.$valid) { // TODO: validations
@@ -69,8 +93,13 @@
         noiseDataService.addData($scope.point);
 
         $scope.point = {};
+        $modalInstance.close(dataPoint);
       }
     };
 
+    $scope.$on('DismissAddDataModal', function($modalStack) {
+      $modalInstance.dismiss('dismissing');
+    });
   });
+
 }).call(this);
